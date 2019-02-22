@@ -299,6 +299,13 @@ function Set-TargetResource
                 if ($PSBoundParameters.ContainsKey("EnableEmbeddedTeaming"))
                 {
                     $parameters["EnableEmbeddedTeaming"] = $EnableEmbeddedTeaming
+
+                    # if embedding teaming is disabled, check is net adapter name is an array
+                    if ($EnableEmbeddedTeaming -eq $false -and $NetAdapterName -is [Array])
+                    {
+                        # if true, select first element and cast to string
+                        $parameters["NetAdapterName"] = [String] $NetAdapterName[0]
+                    }
                 }
 
                 if ($PSBoundParameters.ContainsKey('Id'))
@@ -357,6 +364,13 @@ function Set-TargetResource
             if ($PSBoundParameters.ContainsKey("EnableEmbeddedTeaming"))
             {
                 $parameters["EnableEmbeddedTeaming"] = $EnableEmbeddedTeaming
+
+                # if embedding teaming is disabled, check is net adapter name is an array
+                if ($EnableEmbeddedTeaming -eq $false -and $NetAdapterName -is [Array])
+                {
+                    # if true, select first element and cast to string
+                    $parameters["NetAdapterName"] = [String] $NetAdapterName[0]
+                }
             }
 
             if ($PSBoundParameters.ContainsKey('Id'))
